@@ -30,6 +30,7 @@ O app permite consultar informações meteorológicas de forma simples e visual,
 ---
 
 ## Estrutura do Projeto
+```
 Projeto
 │── Main.py
 │── Classes_Functions.py
@@ -39,10 +40,10 @@ Projeto
 │     ├── sun.png
 │     ├── cold.png
 │     ├── botaoimg.png
-
+```
 
 ### Autor
 - Alex Lourenço
-- Email:alexjr20041@gmail.com
-- Github:https://github.com/Alexlojr
+- Email: alexjr20041@gmail.com
+- Github: https://github.com/Alexlojr
 
