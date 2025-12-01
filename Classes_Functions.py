@@ -63,3 +63,4 @@ def botaopesquisar(root,barradebusca):
     umidaderequestlabel = tk.Label(root, text=f"{dados.umidade}%", font=("Arial", 11), bg='#17517E', fg='#FFFFFF')
     umidaderequestlabel.place(x=225, y=290)
 
+

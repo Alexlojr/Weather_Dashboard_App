@@ -39,3 +39,4 @@ umidadelabel.place(x=120, y=290)
 
 
 root.mainloop()
+
