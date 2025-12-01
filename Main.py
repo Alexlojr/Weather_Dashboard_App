@@ -1,41 +1,55 @@
-import tkinter as tk
 from Classes_Functions import *
 
 
+# ==== Configurar Tema ====
+ctk.set_appearance_mode("system")
+ctk.set_default_color_theme("dark-blue")
+
 # ========= Instanciar Janela =========
-root = tk.Tk()
-root.geometry('1400x700')
-root.title('DashBoard Clima')
+root = ctk.CTk()
+root.geometry('1200x700')
+root.title('Dashboard Clima')
+#root.configure(fg_color="dark blue")
 root.resizable(False, False)
-root.configure(bg='#17517E')
+
+# ==== Imagens ====
+botaoimage = ctk.CTkImage(Image.open("imgs/botaoimg.png"),size=(16,16))
 
 
 
-# ===== Entry =====
-barradebusca = tk.Entry(root, width=50, bd=0, font=('arial',15))
+# ===== Entrys =====
+barradebusca = ctk.CTkEntry(master=root,placeholder_text="Insira a Cidade que Deseja Buscar", width=550, border_width=1, font=('arial',20),text_color='#FFFFFF')
+barradebusca.focus_set()
+barradebusca.bind("<Return>",lambda event: funcaopesquisar(root,barradebusca))
 barradebusca.place(x=120, y=50)
 
 
-# ===== Botão =====
-botaopesquisa = tk.Button(root, text='Buscar',command=lambda: botaopesquisar(root,barradebusca),bd=0)
-botaopesquisa.place(x=70, y=50)
+# ===== Botões =====
+botaopesquisa = ctk.CTkButton(root, text='Buscar', command=lambda: funcaopesquisar(root, barradebusca), border_width=0,image=botaoimage,width=100)
+botaopesquisa.place(x=680, y=50)
 
 
-# ===== Labels =====
-textobarradebuscalabel = tk.Label(root,text='Insira o nome da Cidade que deseja buscar',font=("Arial", 11), bg='#17517E', fg='#FFFFFF')
-textobarradebuscalabel.place(x=120, y=25)
+# ===== Labels Estáticas =====
+textobarradebuscalabel = ctk.CTkLabel(root,text='Insira o Nome da Cidade (Ex.:Paris,Île-de-France,França)', font=('arial',20),text_color='#FFFFFF',)
+textobarradebuscalabel.place(x=120, y=20)
 
-Condicaolabel = tk.Label(root,text="Clima Atual: ",font=("Arial", 11),bg='#17517E', fg='#FFFFFF')
-Condicaolabel.place(x=120, y=200)
 
-descricaolabel = tk.Label(root,text="Condição Atual: ",font=("Arial", 11),bg='#17517E', fg='#FFFFFF')
-descricaolabel.place(x=120, y=230)
+Condicaolabel = ctk.CTkLabel(root,text="Clima Atual: ",font=('arial',20),text_color='#FFFFFF')
+Condicaolabel.place(x=120, y=170)
 
-temperaturalabel = tk.Label(root,text="Temperatura Atual: ",font=("Arial", 11),bg='#17517E', fg='#FFFFFF')
-temperaturalabel.place(x=120, y=260)
+descricaolabel = ctk.CTkLabel(root,text="Descrição do Clima: ",font=('arial',20),text_color='#FFFFFF')
+descricaolabel.place(x=120, y=210)
 
-umidadelabel = tk.Label(root,text="Umidade Atual: ",font=("Arial", 11),bg='#17517E', fg='#FFFFFF')
+temperaturalabel = ctk.CTkLabel(root,text="Temperatura Atual: ",font=('arial',20),text_color='#FFFFFF')
+temperaturalabel.place(x=120, y=250)
+
+umidadelabel = ctk.CTkLabel(root,text="Umidade Atual: ",font=('arial',20),text_color='#FFFFFF')
 umidadelabel.place(x=120, y=290)
+
+ventolabel = ctk.CTkLabel(root,text="Vel. Vento Atual: ",font=('arial',20),text_color='#FFFFFF')
+ventolabel.place(x=120, y=330)
+
+
 
 
 root.mainloop()
