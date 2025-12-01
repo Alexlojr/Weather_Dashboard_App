@@ -7,14 +7,13 @@ ctk.set_default_color_theme("dark-blue")
 
 # ========= Instanciar Janela =========
 root = ctk.CTk()
-root.geometry('1200x700')
+root.geometry('1200x600')
 root.title('Dashboard Clima')
 #root.configure(fg_color="dark blue")
 root.resizable(False, False)
 
 # ==== Imagens ====
 botaoimage = ctk.CTkImage(Image.open("imgs/botaoimg.png"),size=(16,16))
-
 
 
 # ===== Entrys =====
@@ -43,11 +42,14 @@ descricaolabel.place(x=120, y=210)
 temperaturalabel = ctk.CTkLabel(root,text="Temperatura Atual: ",font=('arial',20),text_color='#FFFFFF')
 temperaturalabel.place(x=120, y=250)
 
+temperaturasenslabel = ctk.CTkLabel(root,text="Temperatura Termica: ",font=('arial',20),text_color='#FFFFFF')
+temperaturasenslabel.place(x=120, y=290)
+
 umidadelabel = ctk.CTkLabel(root,text="Umidade Atual: ",font=('arial',20),text_color='#FFFFFF')
-umidadelabel.place(x=120, y=290)
+umidadelabel.place(x=120, y=330)
 
 ventolabel = ctk.CTkLabel(root,text="Vel. Vento Atual: ",font=('arial',20),text_color='#FFFFFF')
-ventolabel.place(x=120, y=330)
+ventolabel.place(x=120, y=370)
 
 
 
