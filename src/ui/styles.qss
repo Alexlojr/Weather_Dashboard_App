@@ -1,0 +1,14 @@
+QPushButton{
+    color: white;
+    ;
+}
+QLabel{
+    font-family: Arial;
+    font-size: 11pt;
+    font-weight: bold;
+    color: white;
+
+}
+QLineEdit{
+    font-size:20pt;
+}
