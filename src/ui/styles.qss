@@ -1,14 +1,78 @@
-QPushButton{
-    color: white;
-    ;
+/* styles.qss - Adicione mais estilo */
+
+/* Background da janela */
+QMainWindow {
+    background-color: #1e1e1e;
 }
-QLabel{
+
+/* Header title */
+QLabel#headerTitle {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 10px 0;
+}
+
+/* Labels normais */
+QLabel {
     font-family: Arial;
     font-size: 11pt;
-    font-weight: bold;
-    color: white;
-
+    color: #e0e0e0;
 }
-QLineEdit{
-    font-size:20pt;
+
+/* Search bar */
+QLineEdit {
+    font-size: 14pt;
+    padding: 10px;
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border: 2px solid #3d3d3d;
+    border-radius: 8px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #1976d2;
+}
+
+/* Botão de busca */
+QPushButton {
+    background-color: #1976d2;
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2196f3;
+}
+
+QPushButton:pressed {
+    background-color: #0d47a1;
+}
+
+/* Info block */
+QGroupBox {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #ffffff;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 5px 10px;
+    background-color: #2d2d2d;
+}
+
+QGroupBox QLabel {
+    font-size: 11pt;
+    font-weight: normal;
+    padding: 5px;
 }

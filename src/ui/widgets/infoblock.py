@@ -1,12 +1,12 @@
-from src.ui import *
+from PySide6.QtWidgets import QGroupBox,QVBoxLayout,QLabel
 
 
 class InfoBlock(QGroupBox):
+    def __init__(self, title: str):
+        super().__init__(title)
 
-    def __init__(self, title, parent=None):
-        super().__init__(title, parent)
-
-        Weather_Data = {
+        # Initialize weather data
+        self.WEATHER_FIELDS = {
             "Current Temperature °C": "--",
             "Thermal Temperature": "--",
             "Weather Condition": "--",
@@ -15,21 +15,24 @@ class InfoBlock(QGroupBox):
             "Wind Speed (km/h)": "--",
         }
 
-        self.layout = QVBoxLayout()
-        self.labels = {}  # Dictionary to store and reference labels easily
+        self._setup_ui()
 
-        for key, value in Weather_Data.items():
-            # Create a label for each data item
-            label_text = f"{key}: {value}"
-            label = QLabel(label_text)
-            label.setWordWrap(True)  # Enable word wrapping for long text
-            self.layout.addWidget(label)
-            self.labels[key] = label  # Store reference to the label
+    def _setup_ui(self) -> None:
+        layout = QVBoxLayout()
+        layout.setSpacing(10)
+        self.labels = {}
 
-        self.setLayout(self.layout)
+        for key, value in self.WEATHER_FIELDS.items():
+            label = QLabel(f"{key}: {value}")
+            label.setObjectName("dataLabel")
+            layout.addWidget(label)
+            self.labels[key] = label
 
-    def update_field(self, key, new_value):
-        """Method to update a specific label's text by its key."""
-        if key in self.labels:
-            current_text = self.labels[key].text().split(':')[0]
-            self.labels[key].setText(f"{current_text}: {new_value}")
+        self.setLayout(layout)
+
+    def update_field(self, key: str, new_value: str) -> None:
+        if key not in self.labels:
+            raise KeyError(f"Campo '{key}' não existe")
+
+        field_name = key.split(':')[0] if ':' in key else key
+        self.labels[key].setText(f"{field_name}: {new_value}")

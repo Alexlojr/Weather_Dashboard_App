@@ -1,8 +1,7 @@
-from src.ui import *
+#import sys
+from PySide6.QtWidgets import QMainWindow
 
-
-
-class TemplateWindow(QMainWindow):
+class BaseWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setUI()
@@ -25,7 +24,7 @@ class TemplateWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = TemplateWindow()
+    window = BaseWindow()
     window.show()
     app.exec()
 

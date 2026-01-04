@@ -1,4 +1,4 @@
-from src.ui import *
+from PySide6.QtWidgets import QLineEdit
 
 class SearchBar(QLineEdit):
     def __init__(self,parent=None):

@@ -1,54 +1,64 @@
+import sys
+
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel,QApplication,QHBoxLayout
 from pathlib import Path
-from src.ui import *
+
 from src.ui.widgets.search_button import SearchButton
 from src.ui.widgets.infoblock import InfoBlock
-from src.ui.template_main_window import TemplateWindow
 from src.ui.widgets.searchbar import SearchBar
+from src.ui.template_main_window import BaseWindow
 
 
-class MainWindow(TemplateWindow):
+class MainWindow(BaseWindow):
     def __init__(self) -> None:
         super().__init__()
-
-        #Configure Window
-
         self.setWindowTitle("Weather Dashboard")
-        #self.set
-
-        #Configure layout
 
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
-        layout = QVBoxLayout()
 
-        #Label
-        label = QLabel("Insert City Name")
-        label.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Fixed)
-        layout.addWidget(label)
+        # Main Layout
+        main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(40, 40, 40, 40)
+        main_layout.setSpacing(20)
 
-        #Text input
-        search_bar = SearchBar()
-        search_bar.setFixedSize(800, 40)
-        layout.addWidget(search_bar)
+        # Header
+        header_label = QLabel("Weather Dashboard")
+        header_label.setObjectName("headerTitle")
+        main_layout.addWidget(header_label)
 
-        #Search button
-        search_button = SearchButton()
-        search_button.setFixedSize(100, 30)
-        layout.addWidget(search_button)
+        # === Search Area ===
+        search_container = QWidget()
+        search_layout = QHBoxLayout(search_container)
+        search_layout.setContentsMargins(0, 0, 0, 0)
 
-        #Labels Box
-        labels = InfoBlock("Weather Information")
-        labels.setFixedSize(800, 400)
-        layout.addWidget(labels)
+        search_label = QLabel("City Name:")
+        search_layout.addWidget(search_label)
 
+        self.search_bar = SearchBar()
+        search_layout.addWidget(self.search_bar, 1)
 
-        central_widget.setLayout(layout)
+        self.search_button = SearchButton()
+        self.search_button.setFixedSize(100, 40)
+        self.search_button.clicked.connect(self._handle_search)
+        search_layout.addWidget(self.search_button)
 
+        main_layout.addWidget(search_container)
 
+        # === Info Block ===
+        self.info_block = InfoBlock("Weather Information")
+        main_layout.addWidget(self.info_block)
 
+        # === Push content to top ===
+        main_layout.addStretch()
 
+    def _handle_search(self) -> None:
+        city = self.search_bar.text().strip()
+        if not city:
+            print("Digite uma cidade!")
+            return
 
-
+        print(f"Buscando: {city}")
 
 
 
