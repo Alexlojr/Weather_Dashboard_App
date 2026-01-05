@@ -76,3 +76,20 @@ QGroupBox QLabel {
     font-weight: normal;
     padding: 7px;
 }
+
+QMainWindow[theme="cold"] {
+    background-color: #0f172a; /* azul escuro */
+    color: white;
+}
+
+
+QMainWindow[theme="hot"] {
+    background-color: #7f1d1d; /* vermelho escuro */
+    color: white;
+}
+
+
+QMainWindow[theme="default"] {
+    background-color: #1e293b;
+    color: white;
+}

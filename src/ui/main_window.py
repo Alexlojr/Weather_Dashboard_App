@@ -4,6 +4,8 @@ import os
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QApplication, QHBoxLayout, QMessageBox
 from pathlib import Path
 from dotenv import load_dotenv
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 
 from src.ui.widgets.search_button import SearchButton
 from src.ui.widgets.infoblock import InfoBlock
@@ -61,6 +63,12 @@ class MainWindow(BaseWindow):
 
         main_layout.addWidget(search_container)
 
+        # === Weather Image ===
+        self.weather_image = QLabel()
+        self.weather_image.setFixedHeight(120)
+        self.weather_image.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(self.weather_image)
+
         # === Info Block ===
         self.info_block = InfoBlock("Weather Information")
         main_layout.addWidget(self.info_block)
@@ -83,6 +91,15 @@ class MainWindow(BaseWindow):
         try:
             # Search data
             weather = self.weather_service.get_weather_by_city(city)
+
+            temperature = weather.temperature_celsius
+
+            if temperature < 15:
+                self._apply_cold_theme()
+            elif temperature > 30:
+                self._apply_hot_theme()
+            else:
+                self._apply_default_theme()
 
             # Update UI
             self.info_block.update_field("City Name ", weather.city_name)
@@ -107,6 +124,33 @@ class MainWindow(BaseWindow):
     def _show_error(self, message: str) -> None:
         """Show error dialog"""
         QMessageBox.warning(self, "Error", message)
+
+    def _apply_cold_theme(self):
+        self.setProperty("theme", "cold")
+        self.style().unpolish(self)
+        self.style().polish(self)
+
+        pixmap = QPixmap("src/resources/cold.png")
+        self.weather_image.setPixmap(pixmap.scaled(
+            100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation
+        ))
+
+    def _apply_hot_theme(self):
+        self.setProperty("theme", "hot")
+        self.style().unpolish(self)
+        self.style().polish(self)
+
+        pixmap = QPixmap("src/resources/sun.png")
+        self.weather_image.setPixmap(pixmap.scaled(
+            100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation
+        ))
+
+    def _apply_default_theme(self):
+        self.setProperty("theme", "default")
+        self.style().unpolish(self)
+        self.style().polish(self)
+
+        self.weather_image.clear()
 
 
 

@@ -34,4 +34,5 @@ src/
 ```
 
 ## Preview
+
 ![img.png](src/resources/img.png)
