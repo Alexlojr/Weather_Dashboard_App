@@ -46,7 +46,7 @@ class WeatherService:
 
         data = geo_data.json()
         if not data:
-            raise ValueError(f"Cidade '{city}' não encontrada")
+            raise ValueError(f"City '{city}' not found")
 
         if DEBUG:
             print(data)
