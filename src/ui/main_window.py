@@ -1,17 +1,26 @@
 import sys
+import os
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel,QApplication,QHBoxLayout
 from pathlib import Path
+from dotenv import load_dotenv
 
 from src.ui.widgets.search_button import SearchButton
 from src.ui.widgets.infoblock import InfoBlock
 from src.ui.widgets.searchbar import SearchBar
 from src.ui.template_main_window import BaseWindow
+from src.services.weatherAPI import WeatherService
 
 
 class MainWindow(BaseWindow):
     def __init__(self) -> None:
         super().__init__()
+
+        load_dotenv()
+        api_key = os.getenv('API_KEY')
+        self.weather_service = WeatherService(api_key)
+
+
         self.setWindowTitle("Weather Dashboard")
 
         central_widget = QWidget(self)
@@ -59,6 +68,21 @@ class MainWindow(BaseWindow):
             return
 
         print(f"Buscando: {city}")
+
+    # def search_weather(self):
+    #     city = self.city_input.text()
+    #
+    #     try:
+    #         # Recebe objeto WeatherData
+    #         weather = self.weather_service.get_weather_by_city(city)
+    #
+    #         # Acessa dados facilmente
+    #         self.temp_label.setText(f"{weather.temperature_celsius}°C")
+    #         self.condition_label.setText(weather.condition)
+    #         self.humidity_label.setText(f"{weather.humidity}%")
+    #
+    #     except ValueError as e:
+    #         self.show_error(str(e))
 
 
 

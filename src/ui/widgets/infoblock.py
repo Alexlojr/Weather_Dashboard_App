@@ -7,6 +7,7 @@ class InfoBlock(QGroupBox):
 
         # Initialize weather data
         self.WEATHER_FIELDS = {
+            "City Name ": "--",
             "Current Temperature °C": "--",
             "Thermal Temperature": "--",
             "Weather Condition": "--",
