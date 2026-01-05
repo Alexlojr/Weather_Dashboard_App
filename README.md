@@ -20,7 +20,7 @@ in .env
 ```
 API_KEY=your_api_key_here
 ```
-#### Get your free API key at: https://openweathermap.org/api_keys, creating a account is necessary
+#### Get your free API key at: https://openweathermap.org/api_keys, creating an account is necessary
 
 ## Stack
 
