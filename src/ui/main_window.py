@@ -18,12 +18,12 @@ class MainWindow(BaseWindow):
     def __init__(self) -> None:
         super().__init__()
 
-        # Inicializar serviço
+        # Initialize service
         load_dotenv()
         api_key = os.getenv('API_KEY')
 
         if not api_key:
-            self._show_error("API Key não encontrada! Configure o arquivo .env")
+            self._show_error("API Key not found! Configure .env file")
 
         self.weather_service = WeatherService(api_key)
 
@@ -44,7 +44,7 @@ class MainWindow(BaseWindow):
         header_label.setObjectName("headerTitle")
         main_layout.addWidget(header_label)
 
-        # === Search Area ===
+        # Search Area
         search_container = QWidget()
         search_layout = QHBoxLayout(search_container)
         search_layout.setContentsMargins(0, 0, 0, 0)
@@ -63,13 +63,13 @@ class MainWindow(BaseWindow):
 
         main_layout.addWidget(search_container)
 
-        # === Weather Image ===
+        # Weather Image
         self.weather_image = QLabel()
         self.weather_image.setFixedHeight(120)
         self.weather_image.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(self.weather_image)
 
-        # === Info Block ===
+        # Info Block
         self.info_block = InfoBlock("Weather Information")
         main_layout.addWidget(self.info_block)
 
@@ -140,7 +140,7 @@ class MainWindow(BaseWindow):
         self.style().unpolish(self)
         self.style().polish(self)
 
-        pixmap = QPixmap("src/resources/sun.png")
+        pixmap = QPixmap("src/resources/hot.png")
         self.weather_image.setPixmap(pixmap.scaled(
             100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation
         ))

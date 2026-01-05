@@ -1,17 +1,17 @@
 # Weather Dashboard
 
-Dashboard de clima em tempo real com PySide6.
+Weather Dashboard in realtime with PySide6.
 
 ## Setup
 ```bash
-# Instalar dependências
+# Install dependencies 
 pip install -r requirements.txt
 
-# Configurar API key
+# Configure API key
 cp .env.example .env
-# Adicione sua chave do OpenWeatherMap
+# Add your OpenWeatherMap key
 
-# Rodar
+# Run
 python src/main.py
 ```
 
@@ -28,16 +28,16 @@ API_KEY=your_api_key_here
 - PySide6 6.10
 - OpenWeather API
 
-## Estrutura
+## File Structure
 ```
 src/
 ├── main.py           # Entry point
 ├── ui/               # Interface
 │   ├── main_window.py
-│   ├── widgets/      # Componentes
-│   └── styles.qss    # Estilos
-├── services/         # Lógica de negócio
-└── utils/            # Utilidades
+│   ├── widgets/      # Components
+│   └── styles.qss    # Styles
+├── services/         # API Logic
+└── utils/          
 ```
 
 ## Preview
