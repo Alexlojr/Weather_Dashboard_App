@@ -15,6 +15,13 @@ cp .env.example .env
 python src/main.py
 ```
 
+### OpenWeather API Configuration
+in .env
+```
+API_KEY=your_api_key_here
+```
+#### Get your free API key at: https://openweathermap.org/api_keys, creating a account is necessary
+
 ## Stack
 
 - Python 3.10+
