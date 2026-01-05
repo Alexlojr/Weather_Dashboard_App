@@ -1,7 +1,7 @@
 import sys
 import os
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel,QApplication,QHBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QApplication, QHBoxLayout, QMessageBox
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -16,13 +16,19 @@ class MainWindow(BaseWindow):
     def __init__(self) -> None:
         super().__init__()
 
+        # Inicializar serviço
         load_dotenv()
         api_key = os.getenv('API_KEY')
+
+        if not api_key:
+            self._show_error("API Key não encontrada! Configure o arquivo .env")
+
         self.weather_service = WeatherService(api_key)
 
-
         self.setWindowTitle("Weather Dashboard")
+        self.setup_ui()
 
+    def setup_ui(self) -> None:
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
 
@@ -41,15 +47,16 @@ class MainWindow(BaseWindow):
         search_layout = QHBoxLayout(search_container)
         search_layout.setContentsMargins(0, 0, 0, 0)
 
-        search_label = QLabel("City Name:")
+        search_label = QLabel("City:")
         search_layout.addWidget(search_label)
 
         self.search_bar = SearchBar()
+        self.search_bar.search_triggered.connect(self.handle_search)  # Enter
         search_layout.addWidget(self.search_bar, 1)
 
         self.search_button = SearchButton()
         self.search_button.setFixedSize(100, 40)
-        self.search_button.clicked.connect(self._handle_search)
+        self.search_button.clicked.connect(self.handle_search)  # Click
         search_layout.addWidget(self.search_button)
 
         main_layout.addWidget(search_container)
@@ -58,32 +65,48 @@ class MainWindow(BaseWindow):
         self.info_block = InfoBlock("Weather Information")
         main_layout.addWidget(self.info_block)
 
-        # === Push content to top ===
+        # Push content to top
         main_layout.addStretch()
 
-    def _handle_search(self) -> None:
+    def handle_search(self) -> None:
+        """Handle search button click or Enter press"""
         city = self.search_bar.text().strip()
+
         if not city:
-            print("Digite uma cidade!")
+            self._show_error("Please enter a city name!")
             return
 
-        print(f"Buscando: {city}")
+        # Disable button during search
+        self.search_button.setEnabled(False)
+        self.search_button.setText("Searching...")
 
-    # def search_weather(self):
-    #     city = self.city_input.text()
-    #
-    #     try:
-    #         # Recebe objeto WeatherData
-    #         weather = self.weather_service.get_weather_by_city(city)
-    #
-    #         # Acessa dados facilmente
-    #         self.temp_label.setText(f"{weather.temperature_celsius}°C")
-    #         self.condition_label.setText(weather.condition)
-    #         self.humidity_label.setText(f"{weather.humidity}%")
-    #
-    #     except ValueError as e:
-    #         self.show_error(str(e))
+        try:
+            # Search data
+            weather = self.weather_service.get_weather_by_city(city)
 
+            # Update UI
+            self.info_block.update_field("City Name ", weather.city_name)
+            self.info_block.update_field("Current Temperature °C",f"{weather.temperature_celsius}")
+            self.info_block.update_field("Thermal Temperature",f"{weather.feels_like_celsius}°C")
+            self.info_block.update_field("Weather Condition",weather.condition)
+            self.info_block.update_field("Current Weather",weather.description.capitalize())
+            self.info_block.update_field("Current Humidity",f"{weather.humidity}%")
+            self.info_block.update_field("Wind Speed (km/h)",f"{weather.wind_speed} m/s")
+
+            # Clear
+            self.search_bar.clear()
+
+        except ValueError as e:
+            self._show_error(str(e))
+        except Exception as e:
+            self._show_error(f"Unexpected error: {str(e)}")
+        finally:
+            self.search_button.setEnabled(True)
+            self.search_button.setText("Search")
+
+    def _show_error(self, message: str) -> None:
+        """Show error dialog"""
+        QMessageBox.warning(self, "Error", message)
 
 
 

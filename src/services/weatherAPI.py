@@ -6,7 +6,7 @@ from dataclasses import dataclass
 load_dotenv()
 api_key = os.getenv('API_KEY')
 
-DEBUG = True
+DEBUG = False
 
 @dataclass
 class WeatherData:
@@ -35,8 +35,8 @@ class WeatherService:
 
     def __init__(self,api_key:str):
         self.api_key = api_key
-        self.geo_url = 'http://api.openweathermap.org/geo/1.0/direct?'
-        self.weather_url = 'https://api.openweathermap.org/data/2.5/weather?'
+        self.geo_url = 'http://api.openweathermap.org/geo/1.0/direct'
+        self.weather_url = 'https://api.openweathermap.org/data/2.5/weather'
 
     def get_geo(self,city:str) -> tuple:
         """Returns city (lat, lon)"""
@@ -67,6 +67,9 @@ class WeatherService:
         lat, lon = self.get_geo(city)
         raw_data = self.get_weather(lat, lon)
 
+        if DEBUG:
+            print(raw_data)
+
         # Transforms JSON to API structured data
         return WeatherData(
             city_name=raw_data['name'],
@@ -78,6 +81,9 @@ class WeatherService:
             wind_speed=raw_data['wind']['speed']
         )
 
+if __name__ == '__main__':
+    service = WeatherService(api_key)
+    print(service.get_weather_by_city('London'))
 
 
 

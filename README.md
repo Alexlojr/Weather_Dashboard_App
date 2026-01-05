@@ -34,5 +34,4 @@ src/
 ```
 
 ## Preview
-
-_Em desenvolvimento..._
+![img.png](src/resources/img.png)

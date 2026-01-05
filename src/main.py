@@ -1,4 +1,3 @@
-# src/main.py - ESTE deve ser o entry point
 import sys
 from pathlib import Path
 from PySide6.QtWidgets import QApplication
